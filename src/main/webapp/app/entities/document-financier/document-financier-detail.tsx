@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import {} from 'react-jhipster';
+import { byteSize, openFile } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -32,9 +32,20 @@ export const DocumentFinancierDetail = () => {
           </dt>
           <dd>{documentFinancierEntity.nom}</dd>
           <dt>
-            <span id="file">File</span>
+            <span id="fichier">Fichier</span>
           </dt>
-          <dd>{documentFinancierEntity.file}</dd>
+          <dd>
+            {documentFinancierEntity.fichier ? (
+              <div>
+                {documentFinancierEntity.fichierContentType ? (
+                  <a onClick={openFile(documentFinancierEntity.fichierContentType, documentFinancierEntity.fichier)}>Ouvrir&nbsp;</a>
+                ) : null}
+                <span>
+                  {documentFinancierEntity.fichierContentType}, {byteSize(documentFinancierEntity.fichier)}
+                </span>
+              </div>
+            ) : null}
+          </dd>
           <dt>Chantier</dt>
           <dd>{documentFinancierEntity.chantier ? documentFinancierEntity.chantier.id : ''}</dd>
         </dl>

@@ -28,9 +28,12 @@ public class PhotoTravail implements Serializable {
     @Field("date")
     private Instant date;
 
-    @NotNull
     @Field("photo")
-    private String photo;
+    private byte[] photo;
+
+    @NotNull
+    @Field("photo_content_type")
+    private String photoContentType;
 
     @DBRef
     @Field("chantier")
@@ -93,17 +96,30 @@ public class PhotoTravail implements Serializable {
         this.date = date;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return this.photo;
     }
 
-    public PhotoTravail photo(String photo) {
+    public PhotoTravail photo(byte[] photo) {
         this.setPhoto(photo);
         return this;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public String getPhotoContentType() {
+        return this.photoContentType;
+    }
+
+    public PhotoTravail photoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
+        return this;
+    }
+
+    public void setPhotoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
     }
 
     public Chantier getChantier() {
@@ -146,6 +162,7 @@ public class PhotoTravail implements Serializable {
             ", description='" + getDescription() + "'" +
             ", date='" + getDate() + "'" +
             ", photo='" + getPhoto() + "'" +
+            ", photoContentType='" + getPhotoContentType() + "'" +
             "}";
     }
 }

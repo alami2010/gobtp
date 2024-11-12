@@ -15,8 +15,9 @@ public class DocumentFinancierDTO implements Serializable {
     @NotNull
     private String nom;
 
-    @NotNull
-    private String file;
+    private byte[] fichier;
+
+    private String fichierContentType;
 
     private ChantierDTO chantier;
 
@@ -36,12 +37,20 @@ public class DocumentFinancierDTO implements Serializable {
         this.nom = nom;
     }
 
-    public String getFile() {
-        return file;
+    public byte[] getFichier() {
+        return fichier;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setFichier(byte[] fichier) {
+        this.fichier = fichier;
+    }
+
+    public String getFichierContentType() {
+        return fichierContentType;
+    }
+
+    public void setFichierContentType(String fichierContentType) {
+        this.fichierContentType = fichierContentType;
     }
 
     public ChantierDTO getChantier() {
@@ -79,7 +88,7 @@ public class DocumentFinancierDTO implements Serializable {
         return "DocumentFinancierDTO{" +
             "id='" + getId() + "'" +
             ", nom='" + getNom() + "'" +
-            ", file='" + getFile() + "'" +
+            ", fichier='" + getFichier() + "'" +
             ", chantier=" + getChantier() +
             "}";
     }

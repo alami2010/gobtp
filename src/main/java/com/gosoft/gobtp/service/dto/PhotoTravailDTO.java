@@ -18,8 +18,9 @@ public class PhotoTravailDTO implements Serializable {
     @NotNull
     private Instant date;
 
-    @NotNull
-    private String photo;
+    private byte[] photo;
+
+    private String photoContentType;
 
     private ChantierDTO chantier;
 
@@ -47,12 +48,20 @@ public class PhotoTravailDTO implements Serializable {
         this.date = date;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public String getPhotoContentType() {
+        return photoContentType;
+    }
+
+    public void setPhotoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
     }
 
     public ChantierDTO getChantier() {

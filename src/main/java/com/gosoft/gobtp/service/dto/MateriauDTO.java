@@ -16,7 +16,6 @@ public class MateriauDTO implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
     private Instant date;
 
     private ChantierDTO chantier;

@@ -11,8 +11,8 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "file",
-      "fieldType": "String",
+      "fieldName": "fichier",
+      "fieldType": "Blob",
       "fieldValidateRules": ["required"]
     }
   ],

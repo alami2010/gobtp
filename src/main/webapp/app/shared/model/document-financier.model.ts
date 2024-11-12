@@ -3,7 +3,8 @@ import { IChantier } from 'app/shared/model/chantier.model';
 export interface IDocumentFinancier {
   id?: string;
   nom?: string;
-  file?: string;
+  fichierContentType?: string;
+  fichier?: string;
   chantier?: IChantier | null;
 }
 

@@ -24,9 +24,12 @@ public class Plan implements Serializable {
     @Field("name")
     private String name;
 
-    @NotNull
     @Field("file")
-    private String file;
+    private byte[] file;
+
+    @NotNull
+    @Field("file_content_type")
+    private String fileContentType;
 
     @DBRef
     @Field("chantier")
@@ -76,17 +79,30 @@ public class Plan implements Serializable {
         this.name = name;
     }
 
-    public String getFile() {
+    public byte[] getFile() {
         return this.file;
     }
 
-    public Plan file(String file) {
+    public Plan file(byte[] file) {
         this.setFile(file);
         return this;
     }
 
-    public void setFile(String file) {
+    public void setFile(byte[] file) {
         this.file = file;
+    }
+
+    public String getFileContentType() {
+        return this.fileContentType;
+    }
+
+    public Plan fileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
+        return this;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
     }
 
     public Chantier getChantier() {
@@ -128,6 +144,7 @@ public class Plan implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", file='" + getFile() + "'" +
+            ", fileContentType='" + getFileContentType() + "'" +
             "}";
     }
 }

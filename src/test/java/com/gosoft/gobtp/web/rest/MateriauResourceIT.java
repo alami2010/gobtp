@@ -148,22 +148,6 @@ class MateriauResourceIT {
     }
 
     @Test
-    void checkDateIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        materiau.setDate(null);
-
-        // Create the Materiau, which fails.
-        MateriauDTO materiauDTO = materiauMapper.toDto(materiau);
-
-        restMateriauMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(materiauDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllMateriaus() throws Exception {
         // Initialize the database
         insertedMateriau = materiauRepository.save(materiau);

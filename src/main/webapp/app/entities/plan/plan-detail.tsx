@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import {} from 'react-jhipster';
+import { byteSize, openFile } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -34,7 +34,16 @@ export const PlanDetail = () => {
           <dt>
             <span id="file">File</span>
           </dt>
-          <dd>{planEntity.file}</dd>
+          <dd>
+            {planEntity.file ? (
+              <div>
+                {planEntity.fileContentType ? <a onClick={openFile(planEntity.fileContentType, planEntity.file)}>Ouvrir&nbsp;</a> : null}
+                <span>
+                  {planEntity.fileContentType}, {byteSize(planEntity.file)}
+                </span>
+              </div>
+            ) : null}
+          </dd>
           <dt>Chantier</dt>
           <dd>{planEntity.chantier ? planEntity.chantier.id : ''}</dd>
         </dl>

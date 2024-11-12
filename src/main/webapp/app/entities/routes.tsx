@@ -2,6 +2,7 @@ import React from 'react';
 
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 
+import { Route } from 'react-router-dom';
 import Chantier from './chantier';
 import ChefChantier from './chef-chantier';
 import Client from './client';

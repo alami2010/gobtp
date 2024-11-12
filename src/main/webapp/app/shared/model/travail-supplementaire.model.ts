@@ -5,7 +5,7 @@ export interface ITravailSupplementaire {
   id?: string;
   name?: string;
   label?: string | null;
-  date?: dayjs.Dayjs;
+  date?: dayjs.Dayjs | null;
   chantier?: IChantier | null;
 }
 

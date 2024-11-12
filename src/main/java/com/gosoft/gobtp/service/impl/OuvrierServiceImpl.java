@@ -47,7 +47,7 @@ public class OuvrierServiceImpl implements OuvrierService {
     public OuvrierDTO update(OuvrierDTO ouvrierDTO) {
         LOG.debug("Request to update Ouvrier : {}", ouvrierDTO);
         Ouvrier ouvrier = ouvrierMapper.toEntity(ouvrierDTO);
-        ouvrier.setIsPersisted();
+        //ouvrier.setIsPersisted();
         ouvrier = ouvrierRepository.save(ouvrier);
         return ouvrierMapper.toDto(ouvrier);
     }

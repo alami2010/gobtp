@@ -28,7 +28,6 @@ public class TravailSupplementaire implements Serializable {
     @Field("label")
     private String label;
 
-    @NotNull
     @Field("date")
     private Instant date;
 

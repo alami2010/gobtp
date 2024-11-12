@@ -15,6 +15,7 @@ import com.gosoft.gobtp.service.dto.PhotoTravailDTO;
 import com.gosoft.gobtp.service.mapper.PhotoTravailMapper;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Base64;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,8 +40,10 @@ class PhotoTravailResourceIT {
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final String DEFAULT_PHOTO = "AAAAAAAAAA";
-    private static final String UPDATED_PHOTO = "BBBBBBBBBB";
+    private static final byte[] DEFAULT_PHOTO = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PHOTO = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_PHOTO_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PHOTO_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/photo-travails";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -68,7 +71,11 @@ class PhotoTravailResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static PhotoTravail createEntity() {
-        return new PhotoTravail().description(DEFAULT_DESCRIPTION).date(DEFAULT_DATE).photo(DEFAULT_PHOTO);
+        return new PhotoTravail()
+            .description(DEFAULT_DESCRIPTION)
+            .date(DEFAULT_DATE)
+            .photo(DEFAULT_PHOTO)
+            .photoContentType(DEFAULT_PHOTO_CONTENT_TYPE);
     }
 
     /**
@@ -78,7 +85,11 @@ class PhotoTravailResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static PhotoTravail createUpdatedEntity() {
-        return new PhotoTravail().description(UPDATED_DESCRIPTION).date(UPDATED_DATE).photo(UPDATED_PHOTO);
+        return new PhotoTravail()
+            .description(UPDATED_DESCRIPTION)
+            .date(UPDATED_DATE)
+            .photo(UPDATED_PHOTO)
+            .photoContentType(UPDATED_PHOTO_CONTENT_TYPE);
     }
 
     @BeforeEach
@@ -151,22 +162,6 @@ class PhotoTravailResourceIT {
     }
 
     @Test
-    void checkPhotoIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        photoTravail.setPhoto(null);
-
-        // Create the PhotoTravail, which fails.
-        PhotoTravailDTO photoTravailDTO = photoTravailMapper.toDto(photoTravail);
-
-        restPhotoTravailMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(photoTravailDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllPhotoTravails() throws Exception {
         // Initialize the database
         insertedPhotoTravail = photoTravailRepository.save(photoTravail);
@@ -179,7 +174,8 @@ class PhotoTravailResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(photoTravail.getId())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].photo").value(hasItem(DEFAULT_PHOTO)));
+            .andExpect(jsonPath("$.[*].photoContentType").value(hasItem(DEFAULT_PHOTO_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].photo").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_PHOTO))));
     }
 
     @Test
@@ -195,7 +191,8 @@ class PhotoTravailResourceIT {
             .andExpect(jsonPath("$.id").value(photoTravail.getId()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.photo").value(DEFAULT_PHOTO));
+            .andExpect(jsonPath("$.photoContentType").value(DEFAULT_PHOTO_CONTENT_TYPE))
+            .andExpect(jsonPath("$.photo").value(Base64.getEncoder().encodeToString(DEFAULT_PHOTO)));
     }
 
     @Test
@@ -213,7 +210,11 @@ class PhotoTravailResourceIT {
 
         // Update the photoTravail
         PhotoTravail updatedPhotoTravail = photoTravailRepository.findById(photoTravail.getId()).orElseThrow();
-        updatedPhotoTravail.description(UPDATED_DESCRIPTION).date(UPDATED_DATE).photo(UPDATED_PHOTO);
+        updatedPhotoTravail
+            .description(UPDATED_DESCRIPTION)
+            .date(UPDATED_DATE)
+            .photo(UPDATED_PHOTO)
+            .photoContentType(UPDATED_PHOTO_CONTENT_TYPE);
         PhotoTravailDTO photoTravailDTO = photoTravailMapper.toDto(updatedPhotoTravail);
 
         restPhotoTravailMockMvc
@@ -327,7 +328,11 @@ class PhotoTravailResourceIT {
         PhotoTravail partialUpdatedPhotoTravail = new PhotoTravail();
         partialUpdatedPhotoTravail.setId(photoTravail.getId());
 
-        partialUpdatedPhotoTravail.description(UPDATED_DESCRIPTION).date(UPDATED_DATE).photo(UPDATED_PHOTO);
+        partialUpdatedPhotoTravail
+            .description(UPDATED_DESCRIPTION)
+            .date(UPDATED_DATE)
+            .photo(UPDATED_PHOTO)
+            .photoContentType(UPDATED_PHOTO_CONTENT_TYPE);
 
         restPhotoTravailMockMvc
             .perform(

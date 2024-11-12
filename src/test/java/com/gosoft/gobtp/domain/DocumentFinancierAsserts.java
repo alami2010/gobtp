@@ -48,7 +48,10 @@ public class DocumentFinancierAsserts {
         assertThat(expected)
             .as("Verify DocumentFinancier relevant properties")
             .satisfies(e -> assertThat(e.getNom()).as("check nom").isEqualTo(actual.getNom()))
-            .satisfies(e -> assertThat(e.getFile()).as("check file").isEqualTo(actual.getFile()));
+            .satisfies(e -> assertThat(e.getFichier()).as("check fichier").isEqualTo(actual.getFichier()))
+            .satisfies(e ->
+                assertThat(e.getFichierContentType()).as("check fichier contenty type").isEqualTo(actual.getFichierContentType())
+            );
     }
 
     /**

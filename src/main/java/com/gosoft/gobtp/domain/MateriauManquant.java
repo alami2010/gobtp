@@ -29,7 +29,6 @@ public class MateriauManquant implements Serializable {
     @Field("quantity")
     private Integer quantity;
 
-    @NotNull
     @Field("date")
     private Instant date;
 

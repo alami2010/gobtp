@@ -47,7 +47,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientDTO update(ClientDTO clientDTO) {
         LOG.debug("Request to update Client : {}", clientDTO);
         Client client = clientMapper.toEntity(clientDTO);
-        client.setIsPersisted();
+        //client.setIsPersisted();
         client = clientRepository.save(client);
         return clientMapper.toDto(client);
     }

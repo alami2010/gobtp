@@ -13,6 +13,7 @@ import com.gosoft.gobtp.domain.DocumentFinancier;
 import com.gosoft.gobtp.repository.DocumentFinancierRepository;
 import com.gosoft.gobtp.service.dto.DocumentFinancierDTO;
 import com.gosoft.gobtp.service.mapper.DocumentFinancierMapper;
+import java.util.Base64;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,8 +35,10 @@ class DocumentFinancierResourceIT {
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
 
-    private static final String DEFAULT_FILE = "AAAAAAAAAA";
-    private static final String UPDATED_FILE = "BBBBBBBBBB";
+    private static final byte[] DEFAULT_FICHIER = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_FICHIER = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_FICHIER_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_FICHIER_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/document-financiers";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -63,7 +66,7 @@ class DocumentFinancierResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static DocumentFinancier createEntity() {
-        return new DocumentFinancier().nom(DEFAULT_NOM).file(DEFAULT_FILE);
+        return new DocumentFinancier().nom(DEFAULT_NOM).fichier(DEFAULT_FICHIER).fichierContentType(DEFAULT_FICHIER_CONTENT_TYPE);
     }
 
     /**
@@ -73,7 +76,7 @@ class DocumentFinancierResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static DocumentFinancier createUpdatedEntity() {
-        return new DocumentFinancier().nom(UPDATED_NOM).file(UPDATED_FILE);
+        return new DocumentFinancier().nom(UPDATED_NOM).fichier(UPDATED_FICHIER).fichierContentType(UPDATED_FICHIER_CONTENT_TYPE);
     }
 
     @BeforeEach
@@ -146,22 +149,6 @@ class DocumentFinancierResourceIT {
     }
 
     @Test
-    void checkFileIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        documentFinancier.setFile(null);
-
-        // Create the DocumentFinancier, which fails.
-        DocumentFinancierDTO documentFinancierDTO = documentFinancierMapper.toDto(documentFinancier);
-
-        restDocumentFinancierMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(documentFinancierDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllDocumentFinanciers() throws Exception {
         // Initialize the database
         insertedDocumentFinancier = documentFinancierRepository.save(documentFinancier);
@@ -173,7 +160,8 @@ class DocumentFinancierResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(documentFinancier.getId())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
-            .andExpect(jsonPath("$.[*].file").value(hasItem(DEFAULT_FILE)));
+            .andExpect(jsonPath("$.[*].fichierContentType").value(hasItem(DEFAULT_FICHIER_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].fichier").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_FICHIER))));
     }
 
     @Test
@@ -188,7 +176,8 @@ class DocumentFinancierResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(documentFinancier.getId()))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
-            .andExpect(jsonPath("$.file").value(DEFAULT_FILE));
+            .andExpect(jsonPath("$.fichierContentType").value(DEFAULT_FICHIER_CONTENT_TYPE))
+            .andExpect(jsonPath("$.fichier").value(Base64.getEncoder().encodeToString(DEFAULT_FICHIER)));
     }
 
     @Test
@@ -206,7 +195,7 @@ class DocumentFinancierResourceIT {
 
         // Update the documentFinancier
         DocumentFinancier updatedDocumentFinancier = documentFinancierRepository.findById(documentFinancier.getId()).orElseThrow();
-        updatedDocumentFinancier.nom(UPDATED_NOM).file(UPDATED_FILE);
+        updatedDocumentFinancier.nom(UPDATED_NOM).fichier(UPDATED_FICHIER).fichierContentType(UPDATED_FICHIER_CONTENT_TYPE);
         DocumentFinancierDTO documentFinancierDTO = documentFinancierMapper.toDto(updatedDocumentFinancier);
 
         restDocumentFinancierMockMvc
@@ -292,7 +281,7 @@ class DocumentFinancierResourceIT {
         DocumentFinancier partialUpdatedDocumentFinancier = new DocumentFinancier();
         partialUpdatedDocumentFinancier.setId(documentFinancier.getId());
 
-        partialUpdatedDocumentFinancier.file(UPDATED_FILE);
+        partialUpdatedDocumentFinancier.fichier(UPDATED_FICHIER).fichierContentType(UPDATED_FICHIER_CONTENT_TYPE);
 
         restDocumentFinancierMockMvc
             .perform(
@@ -322,7 +311,7 @@ class DocumentFinancierResourceIT {
         DocumentFinancier partialUpdatedDocumentFinancier = new DocumentFinancier();
         partialUpdatedDocumentFinancier.setId(documentFinancier.getId());
 
-        partialUpdatedDocumentFinancier.nom(UPDATED_NOM).file(UPDATED_FILE);
+        partialUpdatedDocumentFinancier.nom(UPDATED_NOM).fichier(UPDATED_FICHIER).fichierContentType(UPDATED_FICHIER_CONTENT_TYPE);
 
         restDocumentFinancierMockMvc
             .perform(

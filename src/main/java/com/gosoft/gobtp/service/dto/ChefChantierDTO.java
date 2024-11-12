@@ -15,7 +15,6 @@ public class ChefChantierDTO implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
     private String email;
 
     private String phone;

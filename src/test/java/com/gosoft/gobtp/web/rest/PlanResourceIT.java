@@ -13,6 +13,7 @@ import com.gosoft.gobtp.domain.Plan;
 import com.gosoft.gobtp.repository.PlanRepository;
 import com.gosoft.gobtp.service.dto.PlanDTO;
 import com.gosoft.gobtp.service.mapper.PlanMapper;
+import java.util.Base64;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,8 +35,10 @@ class PlanResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_FILE = "AAAAAAAAAA";
-    private static final String UPDATED_FILE = "BBBBBBBBBB";
+    private static final byte[] DEFAULT_FILE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_FILE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_FILE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_FILE_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/plans";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -63,7 +66,7 @@ class PlanResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Plan createEntity() {
-        return new Plan().name(DEFAULT_NAME).file(DEFAULT_FILE);
+        return new Plan().name(DEFAULT_NAME).file(DEFAULT_FILE).fileContentType(DEFAULT_FILE_CONTENT_TYPE);
     }
 
     /**
@@ -73,7 +76,7 @@ class PlanResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Plan createUpdatedEntity() {
-        return new Plan().name(UPDATED_NAME).file(UPDATED_FILE);
+        return new Plan().name(UPDATED_NAME).file(UPDATED_FILE).fileContentType(UPDATED_FILE_CONTENT_TYPE);
     }
 
     @BeforeEach
@@ -146,22 +149,6 @@ class PlanResourceIT {
     }
 
     @Test
-    void checkFileIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        plan.setFile(null);
-
-        // Create the Plan, which fails.
-        PlanDTO planDTO = planMapper.toDto(plan);
-
-        restPlanMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(planDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllPlans() throws Exception {
         // Initialize the database
         insertedPlan = planRepository.save(plan);
@@ -173,7 +160,8 @@ class PlanResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(plan.getId())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].file").value(hasItem(DEFAULT_FILE)));
+            .andExpect(jsonPath("$.[*].fileContentType").value(hasItem(DEFAULT_FILE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].file").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_FILE))));
     }
 
     @Test
@@ -188,7 +176,8 @@ class PlanResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(plan.getId()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.file").value(DEFAULT_FILE));
+            .andExpect(jsonPath("$.fileContentType").value(DEFAULT_FILE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.file").value(Base64.getEncoder().encodeToString(DEFAULT_FILE)));
     }
 
     @Test
@@ -206,7 +195,7 @@ class PlanResourceIT {
 
         // Update the plan
         Plan updatedPlan = planRepository.findById(plan.getId()).orElseThrow();
-        updatedPlan.name(UPDATED_NAME).file(UPDATED_FILE);
+        updatedPlan.name(UPDATED_NAME).file(UPDATED_FILE).fileContentType(UPDATED_FILE_CONTENT_TYPE);
         PlanDTO planDTO = planMapper.toDto(updatedPlan);
 
         restPlanMockMvc
@@ -284,7 +273,7 @@ class PlanResourceIT {
         Plan partialUpdatedPlan = new Plan();
         partialUpdatedPlan.setId(plan.getId());
 
-        partialUpdatedPlan.file(UPDATED_FILE);
+        partialUpdatedPlan.file(UPDATED_FILE).fileContentType(UPDATED_FILE_CONTENT_TYPE);
 
         restPlanMockMvc
             .perform(
@@ -311,7 +300,7 @@ class PlanResourceIT {
         Plan partialUpdatedPlan = new Plan();
         partialUpdatedPlan.setId(plan.getId());
 
-        partialUpdatedPlan.name(UPDATED_NAME).file(UPDATED_FILE);
+        partialUpdatedPlan.name(UPDATED_NAME).file(UPDATED_FILE).fileContentType(UPDATED_FILE_CONTENT_TYPE);
 
         restPlanMockMvc
             .perform(

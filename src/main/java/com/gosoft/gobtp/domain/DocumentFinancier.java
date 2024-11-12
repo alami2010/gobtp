@@ -24,9 +24,12 @@ public class DocumentFinancier implements Serializable {
     @Field("nom")
     private String nom;
 
+    @Field("fichier")
+    private byte[] fichier;
+
     @NotNull
-    @Field("file")
-    private String file;
+    @Field("fichier_content_type")
+    private String fichierContentType;
 
     @DBRef
     @Field("chantier")
@@ -76,17 +79,30 @@ public class DocumentFinancier implements Serializable {
         this.nom = nom;
     }
 
-    public String getFile() {
-        return this.file;
+    public byte[] getFichier() {
+        return this.fichier;
     }
 
-    public DocumentFinancier file(String file) {
-        this.setFile(file);
+    public DocumentFinancier fichier(byte[] fichier) {
+        this.setFichier(fichier);
         return this;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setFichier(byte[] fichier) {
+        this.fichier = fichier;
+    }
+
+    public String getFichierContentType() {
+        return this.fichierContentType;
+    }
+
+    public DocumentFinancier fichierContentType(String fichierContentType) {
+        this.fichierContentType = fichierContentType;
+        return this;
+    }
+
+    public void setFichierContentType(String fichierContentType) {
+        this.fichierContentType = fichierContentType;
     }
 
     public Chantier getChantier() {
@@ -127,7 +143,8 @@ public class DocumentFinancier implements Serializable {
         return "DocumentFinancier{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", file='" + getFile() + "'" +
+            ", fichier='" + getFichier() + "'" +
+            ", fichierContentType='" + getFichierContentType() + "'" +
             "}";
     }
 }

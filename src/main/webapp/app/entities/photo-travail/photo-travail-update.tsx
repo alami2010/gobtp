@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { ValidatedField, ValidatedForm } from 'react-jhipster';
+import { ValidatedBlobField, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -101,12 +101,13 @@ export const PhotoTravailUpdate = () => {
                   required: { value: true, message: 'Ce champ est obligatoire.' },
                 }}
               />
-              <ValidatedField
+              <ValidatedBlobField
                 label="Photo"
                 id="photo-travail-photo"
                 name="photo"
                 data-cy="photo"
-                type="text"
+                isImage
+                accept="image/*"
                 validate={{
                   required: { value: true, message: 'Ce champ est obligatoire.' },
                 }}

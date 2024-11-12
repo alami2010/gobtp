@@ -12,8 +12,7 @@
     },
     {
       "fieldName": "date",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
+      "fieldType": "Instant"
     }
   ],
   "jpaMetamodelFiltering": false,

@@ -15,8 +15,9 @@ public class PlanDTO implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private String file;
+    private byte[] file;
+
+    private String fileContentType;
 
     private ChantierDTO chantier;
 
@@ -36,12 +37,20 @@ public class PlanDTO implements Serializable {
         this.name = name;
     }
 
-    public String getFile() {
+    public byte[] getFile() {
         return file;
     }
 
-    public void setFile(String file) {
+    public void setFile(byte[] file) {
         this.file = file;
+    }
+
+    public String getFileContentType() {
+        return fileContentType;
+    }
+
+    public void setFileContentType(String fileContentType) {
+        this.fileContentType = fileContentType;
     }
 
     public ChantierDTO getChantier() {

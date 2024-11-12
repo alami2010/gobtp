@@ -16,7 +16,7 @@
     },
     {
       "fieldName": "photo",
-      "fieldType": "String",
+      "fieldType": "ImageBlob",
       "fieldValidateRules": ["required"]
     }
   ],

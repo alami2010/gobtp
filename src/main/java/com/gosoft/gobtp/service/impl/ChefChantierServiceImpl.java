@@ -51,7 +51,7 @@ public class ChefChantierServiceImpl implements ChefChantierService {
     public ChefChantierDTO update(ChefChantierDTO chefChantierDTO) {
         LOG.debug("Request to update ChefChantier : {}", chefChantierDTO);
         ChefChantier chefChantier = chefChantierMapper.toEntity(chefChantierDTO);
-        chefChantier.setIsPersisted();
+        //chefChantier.setIsPersisted();
         chefChantier = chefChantierRepository.save(chefChantier);
         return chefChantierMapper.toDto(chefChantier);
     }

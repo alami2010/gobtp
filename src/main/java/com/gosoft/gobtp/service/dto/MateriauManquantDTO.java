@@ -19,7 +19,6 @@ public class MateriauManquantDTO implements Serializable {
     @NotNull
     private Integer quantity;
 
-    @NotNull
     private Instant date;
 
     private ChantierDTO chantier;

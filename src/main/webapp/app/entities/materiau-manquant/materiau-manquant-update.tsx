@@ -120,9 +120,6 @@ export const MateriauManquantUpdate = () => {
                 data-cy="date"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: 'Ce champ est obligatoire.' },
-                }}
               />
               <ValidatedField id="materiau-manquant-chantier" name="chantier" data-cy="chantier" label="Chantier" type="select">
                 <option value="" key="0" />

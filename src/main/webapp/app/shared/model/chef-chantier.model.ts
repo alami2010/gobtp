@@ -3,7 +3,7 @@ import { IUser } from 'app/shared/model/user.model';
 export interface IChefChantier {
   id?: string;
   name?: string;
-  email?: string;
+  email?: string | null;
   phone?: string | null;
   internalUser?: IUser | null;
 }

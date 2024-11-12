@@ -167,22 +167,6 @@ class MateriauManquantResourceIT {
     }
 
     @Test
-    void checkDateIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        materiauManquant.setDate(null);
-
-        // Create the MateriauManquant, which fails.
-        MateriauManquantDTO materiauManquantDTO = materiauManquantMapper.toDto(materiauManquant);
-
-        restMateriauManquantMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(materiauManquantDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllMateriauManquants() throws Exception {
         // Initialize the database
         insertedMateriauManquant = materiauManquantRepository.save(materiauManquant);

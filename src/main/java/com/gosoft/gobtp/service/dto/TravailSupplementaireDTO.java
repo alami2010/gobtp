@@ -18,7 +18,6 @@ public class TravailSupplementaireDTO implements Serializable {
 
     private String label;
 
-    @NotNull
     private Instant date;
 
     private ChantierDTO chantier;

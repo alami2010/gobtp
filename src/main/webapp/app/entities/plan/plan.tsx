@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { JhiItemCount, JhiPagination, getPaginationState } from 'react-jhipster';
+import { JhiItemCount, JhiPagination, byteSize, getPaginationState, openFile } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
@@ -131,7 +131,16 @@ export const Plan = () => {
                     </Button>
                   </td>
                   <td>{plan.name}</td>
-                  <td>{plan.file}</td>
+                  <td>
+                    {plan.file ? (
+                      <div>
+                        {plan.fileContentType ? <a onClick={openFile(plan.fileContentType, plan.file)}>Ouvrir &nbsp;</a> : null}
+                        <span>
+                          {plan.fileContentType}, {byteSize(plan.file)}
+                        </span>
+                      </div>
+                    ) : null}
+                  </td>
                   <td>{plan.chantier ? <Link to={`/chantier/${plan.chantier.id}`}>{plan.chantier.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

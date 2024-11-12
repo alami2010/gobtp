@@ -12,7 +12,7 @@
     },
     {
       "fieldName": "file",
-      "fieldType": "String",
+      "fieldType": "Blob",
       "fieldValidateRules": ["required"]
     }
   ],

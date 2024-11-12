@@ -5,7 +5,7 @@ export interface IMateriauManquant {
   id?: string;
   name?: string;
   quantity?: number;
-  date?: dayjs.Dayjs;
+  date?: dayjs.Dayjs | null;
   chantier?: IChantier | null;
 }
 

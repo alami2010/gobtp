@@ -5,6 +5,7 @@ export interface IPhotoTravail {
   id?: string;
   description?: string | null;
   date?: dayjs.Dayjs;
+  photoContentType?: string;
   photo?: string;
   chantier?: IChantier | null;
 }

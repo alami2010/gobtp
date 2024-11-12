@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { TextFormat } from 'react-jhipster';
+import { TextFormat, byteSize, openFile } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT } from 'app/config/constants';
@@ -39,7 +39,23 @@ export const PhotoTravailDetail = () => {
           <dt>
             <span id="photo">Photo</span>
           </dt>
-          <dd>{photoTravailEntity.photo}</dd>
+          <dd>
+            {photoTravailEntity.photo ? (
+              <div>
+                {photoTravailEntity.photoContentType ? (
+                  <a onClick={openFile(photoTravailEntity.photoContentType, photoTravailEntity.photo)}>
+                    <img
+                      src={`data:${photoTravailEntity.photoContentType};base64,${photoTravailEntity.photo}`}
+                      style={{ maxHeight: '30px' }}
+                    />
+                  </a>
+                ) : null}
+                <span>
+                  {photoTravailEntity.photoContentType}, {byteSize(photoTravailEntity.photo)}
+                </span>
+              </div>
+            ) : null}
+          </dd>
           <dt>Chantier</dt>
           <dd>{photoTravailEntity.chantier ? photoTravailEntity.chantier.id : ''}</dd>
         </dl>

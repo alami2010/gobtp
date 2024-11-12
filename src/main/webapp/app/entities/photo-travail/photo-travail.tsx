@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { JhiItemCount, JhiPagination, TextFormat, getPaginationState } from 'react-jhipster';
+import { JhiItemCount, JhiPagination, TextFormat, byteSize, getPaginationState, openFile } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { APP_DATE_FORMAT } from 'app/config/constants';
@@ -136,7 +136,21 @@ export const PhotoTravail = () => {
                   </td>
                   <td>{photoTravail.description}</td>
                   <td>{photoTravail.date ? <TextFormat type="date" value={photoTravail.date} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{photoTravail.photo}</td>
+                  <td>
+                    {photoTravail.photo ? (
+                      <div>
+                        {photoTravail.photoContentType ? (
+                          <a onClick={openFile(photoTravail.photoContentType, photoTravail.photo)}>
+                            <img src={`data:${photoTravail.photoContentType};base64,${photoTravail.photo}`} style={{ maxHeight: '30px' }} />
+                            &nbsp;
+                          </a>
+                        ) : null}
+                        <span>
+                          {photoTravail.photoContentType}, {byteSize(photoTravail.photo)}
+                        </span>
+                      </div>
+                    ) : null}
+                  </td>
                   <td>
                     {photoTravail.chantier ? <Link to={`/chantier/${photoTravail.chantier.id}`}>{photoTravail.chantier.id}</Link> : ''}
                   </td>

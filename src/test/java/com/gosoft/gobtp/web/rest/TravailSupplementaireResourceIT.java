@@ -156,22 +156,6 @@ class TravailSupplementaireResourceIT {
     }
 
     @Test
-    void checkDateIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        travailSupplementaire.setDate(null);
-
-        // Create the TravailSupplementaire, which fails.
-        TravailSupplementaireDTO travailSupplementaireDTO = travailSupplementaireMapper.toDto(travailSupplementaire);
-
-        restTravailSupplementaireMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(travailSupplementaireDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllTravailSupplementaires() throws Exception {
         // Initialize the database
         insertedTravailSupplementaire = travailSupplementaireRepository.save(travailSupplementaire);

@@ -31,7 +31,6 @@ public class Client implements Serializable {
     @Field("is_professional")
     private Boolean isProfessional;
 
-    @NotNull
     @Field("date")
     private Instant date;
 

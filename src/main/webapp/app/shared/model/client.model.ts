@@ -5,7 +5,7 @@ export interface IClient {
   id?: string;
   name?: string;
   isProfessional?: boolean;
-  date?: dayjs.Dayjs;
+  date?: dayjs.Dayjs | null;
   adresse?: string | null;
   info?: string | null;
   internalUser?: IUser | null;

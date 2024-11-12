@@ -26,7 +26,6 @@ public class ChefChantier implements Serializable {
     @Field("name")
     private String name;
 
-    @NotNull
     @Field("email")
     private String email;
 

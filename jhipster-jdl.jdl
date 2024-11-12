@@ -7,19 +7,19 @@ enum TypeOuvrier {
 
 entity ChefChantier {
     name String required,
-    email String required,
+    email String ,
     phone String
 }
 
 entity Materiau {
     name String required,
-    date Instant required
+    date Instant
 }
 
 entity Client {
     name String required,
     isProfessional Boolean required,
-    date Instant required,
+    date Instant ,
     adresse String,
     info String
 }
@@ -39,13 +39,13 @@ entity Travail {
 
 entity Plan {
     name String required,
-    file String required // Représente l'URL ou le chemin du fichier (image ou PDF)
+    file Blob required
 }
 
 entity TravailSupplementaire {
     name String required,
     label String,
-    date Instant required
+    date Instant
 }
 
 entity Ouvrier {
@@ -56,7 +56,7 @@ entity Ouvrier {
 entity MateriauManquant {
     name String required,
     quantity Integer required,
-    date Instant required
+    date Instant
 }
 
 entity HoraireTravail {
@@ -70,13 +70,13 @@ entity HoraireTravail {
 
 entity DocumentFinancier {
     nom String required,
-    file String required // Représente l'URL ou le chemin du fichier
+    fichier Blob required // Représente l'URL ou le chemin du fichier
 }
 
 entity PhotoTravail {
     description String,
     date Instant required,
-    photo String required // Représente l'URL ou le chemin du fichier image
+    photo ImageBlob required // Représente l'URL ou le chemin du fichier image
 }
 
 // Relations entre les entités
@@ -108,7 +108,7 @@ relationship OneToOne {
 }
 
 
- 
+
 
 // Options de génération
 
@@ -117,5 +117,5 @@ paginate * with pagination // Ajoute la pagination pour toutes les entités
 dto * with mapstruct       // Génère des DTO pour toutes les entités
 service * with serviceImpl // Ajoute des services pour la logique métier
 
- 
+
 

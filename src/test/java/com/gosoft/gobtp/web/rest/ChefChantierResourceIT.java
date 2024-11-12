@@ -182,22 +182,6 @@ class ChefChantierResourceIT {
     }
 
     @Test
-    void checkEmailIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        chefChantier.setEmail(null);
-
-        // Create the ChefChantier, which fails.
-        ChefChantierDTO chefChantierDTO = chefChantierMapper.toDto(chefChantier);
-
-        restChefChantierMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(chefChantierDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllChefChantiers() throws Exception {
         // Initialize the database
         insertedChefChantier = chefChantierRepository.save(chefChantier);

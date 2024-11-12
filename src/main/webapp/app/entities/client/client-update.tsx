@@ -112,9 +112,6 @@ export const ClientUpdate = () => {
                 data-cy="date"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: 'Ce champ est obligatoire.' },
-                }}
               />
               <ValidatedField label="Adresse" id="client-adresse" name="adresse" data-cy="adresse" type="text" />
               <ValidatedField label="Info" id="client-info" name="info" data-cy="info" type="text" />

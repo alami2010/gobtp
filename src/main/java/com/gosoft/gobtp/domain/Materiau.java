@@ -25,7 +25,6 @@ public class Materiau implements Serializable {
     @Field("name")
     private String name;
 
-    @NotNull
     @Field("date")
     private Instant date;
 

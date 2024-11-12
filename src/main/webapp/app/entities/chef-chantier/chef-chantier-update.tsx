@@ -93,16 +93,7 @@ export const ChefChantierUpdate = () => {
                   required: { value: true, message: 'Ce champ est obligatoire.' },
                 }}
               />
-              <ValidatedField
-                label="Email"
-                id="chef-chantier-email"
-                name="email"
-                data-cy="email"
-                type="text"
-                validate={{
-                  required: { value: true, message: 'Ce champ est obligatoire.' },
-                }}
-              />
+              <ValidatedField label="Email" id="chef-chantier-email" name="email" data-cy="email" type="text" />
               <ValidatedField label="Phone" id="chef-chantier-phone" name="phone" data-cy="phone" type="text" />
               <ValidatedField
                 id="chef-chantier-internalUser"

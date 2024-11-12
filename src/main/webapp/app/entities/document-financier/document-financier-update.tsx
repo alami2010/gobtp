@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { ValidatedField, ValidatedForm } from 'react-jhipster';
+import { ValidatedBlobField, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -93,12 +93,12 @@ export const DocumentFinancierUpdate = () => {
                   required: { value: true, message: 'Ce champ est obligatoire.' },
                 }}
               />
-              <ValidatedField
-                label="File"
-                id="document-financier-file"
-                name="file"
-                data-cy="file"
-                type="text"
+              <ValidatedBlobField
+                label="Fichier"
+                id="document-financier-fichier"
+                name="fichier"
+                data-cy="fichier"
+                openActionLabel="Ouvrir"
                 validate={{
                   required: { value: true, message: 'Ce champ est obligatoire.' },
                 }}

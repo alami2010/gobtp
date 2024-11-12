@@ -4,7 +4,7 @@ import { IChantier } from 'app/shared/model/chantier.model';
 export interface IMateriau {
   id?: string;
   name?: string;
-  date?: dayjs.Dayjs;
+  date?: dayjs.Dayjs | null;
   chantier?: IChantier | null;
 }
 

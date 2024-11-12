@@ -19,7 +19,6 @@ public class ClientDTO implements Serializable {
     @NotNull
     private Boolean isProfessional;
 
-    @NotNull
     private Instant date;
 
     private String adresse;

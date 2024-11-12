@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { JhiItemCount, JhiPagination, getPaginationState } from 'react-jhipster';
+import { JhiItemCount, JhiPagination, byteSize, getPaginationState, openFile } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
@@ -118,8 +118,8 @@ export const DocumentFinancier = () => {
                 <th className="hand" onClick={sort('nom')}>
                   Nom <FontAwesomeIcon icon={getSortIconByFieldName('nom')} />
                 </th>
-                <th className="hand" onClick={sort('file')}>
-                  File <FontAwesomeIcon icon={getSortIconByFieldName('file')} />
+                <th className="hand" onClick={sort('fichier')}>
+                  Fichier <FontAwesomeIcon icon={getSortIconByFieldName('fichier')} />
                 </th>
                 <th>
                   Chantier <FontAwesomeIcon icon="sort" />
@@ -136,7 +136,18 @@ export const DocumentFinancier = () => {
                     </Button>
                   </td>
                   <td>{documentFinancier.nom}</td>
-                  <td>{documentFinancier.file}</td>
+                  <td>
+                    {documentFinancier.fichier ? (
+                      <div>
+                        {documentFinancier.fichierContentType ? (
+                          <a onClick={openFile(documentFinancier.fichierContentType, documentFinancier.fichier)}>Ouvrir &nbsp;</a>
+                        ) : null}
+                        <span>
+                          {documentFinancier.fichierContentType}, {byteSize(documentFinancier.fichier)}
+                        </span>
+                      </div>
+                    ) : null}
+                  </td>
                   <td>
                     {documentFinancier.chantier ? (
                       <Link to={`/chantier/${documentFinancier.chantier.id}`}>{documentFinancier.chantier.id}</Link>

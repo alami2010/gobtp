@@ -48,7 +48,8 @@ public class PlanAsserts {
         assertThat(expected)
             .as("Verify Plan relevant properties")
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
-            .satisfies(e -> assertThat(e.getFile()).as("check file").isEqualTo(actual.getFile()));
+            .satisfies(e -> assertThat(e.getFile()).as("check file").isEqualTo(actual.getFile()))
+            .satisfies(e -> assertThat(e.getFileContentType()).as("check file contenty type").isEqualTo(actual.getFileContentType()));
     }
 
     /**
