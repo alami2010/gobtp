@@ -1,0 +1,102 @@
+{
+  "annotations": {
+    "changelogDate": "20241112145455"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "desc",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Chantier",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "materiau",
+      "relationshipName": "materiaux",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "travail",
+      "relationshipName": "travaux",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "plan",
+      "relationshipName": "plans",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "travailSupplementaire",
+      "relationshipName": "travauxSupplementaires",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "documentFinancier",
+      "relationshipName": "documentsFinanciers",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "photoTravail",
+      "relationshipName": "photosTravail",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "horaireTravail",
+      "relationshipName": "horairesTravail",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "materiauManquant",
+      "relationshipName": "materiauManquant",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "ouvrier",
+      "otherEntityRelationshipName": "chantiers",
+      "relationshipName": "ouvriers",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "chefChantier",
+      "otherEntityRelationshipName": "chantiers",
+      "relationshipName": "chefChantier",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

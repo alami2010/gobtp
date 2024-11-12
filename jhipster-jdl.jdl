@@ -1,0 +1,121 @@
+// JDL pour l'application de gestion des chantiers
+
+enum TypeOuvrier {
+    Ouvrier, Manoeuvre, Macon, Carreleur, Electricien, Plombier, Menuisier, Grutier, Couvreur, Ferrailleur,
+    Peintre, Charpentier, Soudeur, ConducteurEngins, Platrier
+}
+
+entity ChefChantier {
+    name String required,
+    email String required,
+    phone String
+}
+
+entity Materiau {
+    name String required,
+    date Instant required
+}
+
+entity Client {
+    name String required,
+    isProfessional Boolean required,
+    date Instant required,
+    adresse String,
+    info String
+}
+
+entity Chantier {
+    name String required,
+    adresse String required,
+    desc String,
+    status String required,
+    date Instant required
+}
+
+entity Travail {
+    name String required,
+    label String
+}
+
+entity Plan {
+    name String required,
+    file String required // Représente l'URL ou le chemin du fichier (image ou PDF)
+}
+
+entity TravailSupplementaire {
+    name String required,
+    label String,
+    date Instant required
+}
+
+entity Ouvrier {
+    name String required,
+    type TypeOuvrier required // Enumération des types d'ouvriers
+}
+
+entity MateriauManquant {
+    name String required,
+    quantity Integer required,
+    date Instant required
+}
+
+entity HoraireTravail {
+    debutMatin Instant,
+    finMatin Instant,
+    debutSoir Instant,
+    finSoir Instant,
+    date Instant required,
+    jour String required
+}
+
+entity DocumentFinancier {
+    nom String required,
+    file String required // Représente l'URL ou le chemin du fichier
+}
+
+entity PhotoTravail {
+    description String,
+    date Instant required,
+    photo String required // Représente l'URL ou le chemin du fichier image
+}
+
+// Relations entre les entités
+relationship OneToMany {
+    ChefChantier{chantiers} to Chantier{chefChantier} // Relation chef de chantier -> chantiers
+    Chantier{materiaux} to Materiau,
+    Client{chantier} to Chantier,
+    Chantier{travaux} to Travail,
+    Chantier{plans} to Plan,
+    Chantier{travauxSupplementaires} to TravailSupplementaire,
+    Chantier{documentsFinanciers} to DocumentFinancier,
+    Chantier{photosTravail} to PhotoTravail,
+    Chantier{horairesTravail} to HoraireTravail
+    Ouvrier{ouvrier} to HoraireTravail,
+    Chantier{materiauManquant} to MateriauManquant
+}
+
+
+
+relationship ManyToMany {
+    Chantier{ouvriers} to Ouvrier{chantiers}
+}
+
+
+relationship OneToOne {
+  ChefChantier{internalUser(login)} to @OnDelete("CASCADE") @Id User with builtInEntity,
+  Ouvrier{internalUser(login)} to @OnDelete("CASCADE") @Id User with builtInEntity,
+  Client{internalUser(login)} to @OnDelete("CASCADE") @Id User with builtInEntity
+}
+
+
+ 
+
+// Options de génération
+
+filter *
+paginate * with pagination // Ajoute la pagination pour toutes les entités
+dto * with mapstruct       // Génère des DTO pour toutes les entités
+service * with serviceImpl // Ajoute des services pour la logique métier
+
+ 
+

@@ -1,0 +1,52 @@
+{
+  "annotations": {
+    "changelogDate": "20241112145502"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "TypeOuvrier",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "Ouvrier,Manoeuvre,Macon,Carreleur,Electricien,Plombier,Menuisier,Grutier,Couvreur,Ferrailleur,Peintre,Charpentier,Soudeur,ConducteurEngins,Platrier"
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "Ouvrier",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "options": {
+        "id": true,
+        "onDelete": "CASCADE"
+      },
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "internalUser",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityName": "horaireTravail",
+      "relationshipName": "ouvrier",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "chantier",
+      "otherEntityRelationshipName": "ouvriers",
+      "relationshipName": "chantiers",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

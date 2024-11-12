@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20241112145459"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "debutMatin",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "finMatin",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "debutSoir",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "finSoir",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "jour",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": false,
+  "name": "HoraireTravail",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
